@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as THREE from "three";
 
 class Scene extends React.Component {
     constructor(props) {
@@ -21,21 +22,16 @@ class Scene extends React.Component {
             0.1,
             1000
         )
-        const renderer = new THREE.WebGLRenderer({ antialias: true })
-        const geometry = new THREE.BoxGeometry(1, 1, 1)
-        const material = new THREE.MeshBasicMaterial({ color: 0xff00ff })
-        const cube = new THREE.Mesh(geometry, material)
+        const renderer = new THREE.WebGLRenderer({antialias: true})
+
 
         camera.position.z = 4
-        scene.add(cube)
         renderer.setClearColor('#000000')
         renderer.setSize(width, height)
 
         this.scene = scene
         this.camera = camera
         this.renderer = renderer
-        this.material = material
-        this.cube = cube
 
         this.mount.appendChild(this.renderer.domElement)
         this.start()
@@ -57,8 +53,7 @@ class Scene extends React.Component {
     }
 
     animate() {
-        this.cube.rotation.x += 0.01
-        this.cube.rotation.y += 0.01
+
 
         this.renderScene()
         this.frameId = window.requestAnimationFrame(this.animate)
@@ -71,11 +66,13 @@ class Scene extends React.Component {
     render() {
         return (
             <div
-                style={{ width: '400px', height: '400px' }}
-                ref={(mount) => { this.mount = mount }}
+                style={{width: '400px', height: '400px'}}
+                ref={(mount) => {
+                    this.mount = mount
+                }}
             />
         )
     }
 }
 
-ReactDOM.render(<Scene />, document.getElementById('root'))
+ReactDOM.render(<Scene/>, document.getElementById('root'))
