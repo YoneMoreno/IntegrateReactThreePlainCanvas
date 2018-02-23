@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as THREE from "three";
 
+require('./js/NRRDLoader');
+
 class Scene extends React.Component {
     constructor(props) {
         super(props)
@@ -22,6 +24,20 @@ class Scene extends React.Component {
             0.1,
             1000
         )
+
+        var loader = new THREE.NRRDLoader();
+        loader.load("models/columnasegmentado01.nrrd", function (volume) {
+            var sliceZ;
+
+
+            //z plane
+
+            var indexZ = 0;
+            sliceZ = volume.extractSlice('z', Math.floor(volume.RASDimensions[2] / 4));
+            scene.add(sliceZ.mesh);
+
+        });
+
         const renderer = new THREE.WebGLRenderer({antialias: true})
 
 
